@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: todo-app
-        image: chenoc/todo-app:v1
+        image: chenoc/todo-app:v2
         imagePullPolicy: Always
         env:
         - name: PORT
