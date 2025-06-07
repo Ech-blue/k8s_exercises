@@ -1,1 +1,1 @@
-Deploy the application: kubectl apply -f todo-deployment.yaml 
+Deploy the application: kubectl apply -f manifests/todo-deployment.yaml 
