@@ -3,11 +3,10 @@ kind: Service
 metadata:
   name: log-output-svc
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: log-output
   ports:
     - port: 1234
-      nodePort: 30080
       protocol: TCP
       targetPort: 8080
