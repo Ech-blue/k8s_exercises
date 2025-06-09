@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: log-output
-        image: chenoc/log-output-app:v1
+        image: chenoc/log-output-app:v3
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
