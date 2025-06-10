@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-read-write-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-read-write
+  template:
+    metadata:
+      labels:
+        app: log-read-write
+    spec:
+      volumes:
+      - name: shared-data
+        emptyDir: {}
+      containers:
+      - name: writer
+        image: chenoc/log-output-writer:v1
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: shared-data
+          mountPath: /data
+      - name: reader
+        image: chenoc/log-output-reader:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: shared-data
+          mountPath: /data
+
