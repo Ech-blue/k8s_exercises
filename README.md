@@ -8,6 +8,7 @@
 * [1.8](https://github.com/Ech-blue/k8s_exercises/tree/master/log_output)
 * [1.9](https://github.com/Ech-blue/k8s_exercises/tree/master/ping-pong)
 * [1.10](https://github.com/Ech-blue/k8s_exercises/tree/master/log_output)
+* [1.11](https://github.com/Ech-blue/k8s_exercises/tree/master/1.11)
 
 
 
