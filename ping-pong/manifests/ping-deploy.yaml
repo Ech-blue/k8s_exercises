@@ -12,9 +12,16 @@ spec:
       labels:
         app: ping-pong
     spec:
+      volumes:
+        - name: log-ping-vol
+          persistentVolumeClaim:
+            claimName: shared-claim
       containers:
       - name: ping-pong
-        image: chenoc/ping-pong-app:v1
+        image: chenoc/ping-pong-app:v4
+        volumeMounts:
+        - name: log-ping-vol
+          mountPath: /mnt/data
         imagePullPolicy: Always  
         ports:
         - containerPort: 8080

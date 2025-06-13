@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-claim 
+spec:
+  storageClassName: the-shared-pv 
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
