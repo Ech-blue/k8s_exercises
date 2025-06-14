@@ -18,7 +18,7 @@ spec:
           claimName: cache-image
       containers:
       - name: todo-app
-        image: chenoc/todo-app:v3
+        image: chenoc/todo-app:v4
         volumeMounts:
         - name: cache-vol
           mountPath: /caching
