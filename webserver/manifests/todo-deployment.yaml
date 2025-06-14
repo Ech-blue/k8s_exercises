@@ -12,9 +12,16 @@ spec:
       labels:
         app: todo-app
     spec:
+      volumes:
+      - name: cache-vol
+        persistentVolumeClaim:
+          claimName: cache-image
       containers:
       - name: todo-app
-        image: chenoc/todo-app:v2
+        image: chenoc/todo-app:v3
+        volumeMounts:
+        - name: cache-vol
+          mountPath: /caching
         imagePullPolicy: Always
         env:
         - name: PORT
