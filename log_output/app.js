@@ -1,30 +1,31 @@
-const http = require('http');
-const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
+const express = require('express');
+const axios = require('axios');
+const { v4: uuidv4 } = require('uuid');  // Import uuid
+const app = express();
 
-const startupUuid = uuidv4();
-const counterFilePath = '/mnt/data/shared-log-ping/counter.txt';
+const PINGPONG_SERVICE_URL = process.env.PINGPONG_SERVICE_URL || 'http://ping-pong-svc:8080';
 
-setInterval(() => {
-  const timestamp = new Date().toISOString();
-  console.log(`${timestamp}: ${startupUuid}`);
-}, 5000);
+app.get('/log', async (req, res) => {
+  try {
+    const response = await axios.get(`${PINGPONG_SERVICE_URL}/pings`);
+    const pongCount = response.data;
 
-const server = http.createServer((req, res) => {
-  if (req.method === 'GET' && req.url === '/') {
-    fs.readFile(counterFilePath, 'utf8', (err, data) => {
-      const counter = err ? 'N/A' : data.trim();
-      const timestamp = new Date().toISOString();
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end(`Server UUID: ${startupUuid}\nTimestamp: ${timestamp}\nPing / Pongs: ${counter}\n`);
-    });
-  } else {
-    res.writeHead(404);
-    res.end('Not Found');
+    // Generate timestamp and UUID
+    const timestamp = new Date().toISOString();
+    const uuid = uuidv4();
+
+    const logEntry = `${timestamp}: ${uuid} - Ping / Pongs: ${pongCount}`;
+    console.log(logEntry);
+
+    res.send(logEntry);
+  } catch (error) {
+    console.error('Error fetching pong count:', error.message);
+    res.status(500).send('Error fetching pong count');
   }
 });
 
-server.listen(8080, () => {
-  console.log('Server started in port 8080');
+const PORT = process.env.PORT || 8081;
+app.listen(PORT, () => {
+  console.log(`Log Output app listening on port ${PORT}`);
 });
 

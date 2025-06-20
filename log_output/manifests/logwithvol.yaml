@@ -12,13 +12,17 @@ spec:
       labels:
         app: log-output
     spec:
+      volumes:
+        - name: log-ping-vol
+          persistentVolumeClaim:
+            claimName: shared-claim
       containers:
       - name: log-output
-        image: chenoc/log-output-app:v8
+        image: chenoc/log-output-app:v7
+        volumeMounts:
+          - name: log-ping-vol
+            mountPath: /mnt/data
         imagePullPolicy: Always
         ports:
-        - containerPort: 8081
-        env:
-        - name: PINGPONG_SERVICE_URL
-          value: "http://ping-pong-svc:8080"
+        - containerPort: 8080
 
