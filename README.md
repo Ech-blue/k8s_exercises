@@ -11,6 +11,7 @@
 * [1.11](https://github.com/Ech-blue/k8s_exercises/tree/master)
 * [1.12](https://github.com/Ech-blue/k8s_exercises/tree/master/webserver)
 * [1.13](https://github.com/Ech-blue/k8s_exercises/tree/master/webserver)
+* [2.1](https://github.com/Ech-blue/k8s_exercises/tree/master)
 
 
 
