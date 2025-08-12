@@ -19,7 +19,7 @@ spec:
             claimName: shared-claim
       containers:
       - name: ping-pong
-        image: chenoc/ping-pong-app:v4
+        image: chenoc/ping-pong-app:v5
         volumeMounts:
         - name: log-ping-vol
           mountPath: /mnt/data

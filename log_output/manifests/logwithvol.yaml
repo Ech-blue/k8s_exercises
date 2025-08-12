@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: log-output-deployment
+  name: log-output-deployment-withvol
   namespace: exercises
 spec:
   replicas: 1
@@ -17,13 +17,30 @@ spec:
         - name: log-ping-vol
           persistentVolumeClaim:
             claimName: shared-claim
+        - name: config
+          configMap:
+            name: cm-log-output
+            items:
+            - key: information.txt
+              path: information.txt
       containers:
       - name: log-output
-        image: chenoc/log-output-app:v7
+        image: chenoc/log-output-app:v9
+        env:
+        - name: PINGPONG_SERVICE_URL
+          value: "http://ping-pong-svc:8080"
+        - name: MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: cm-log-output
+              key: MESSAGE
         volumeMounts:
-          - name: log-ping-vol
-            mountPath: /mnt/data
+        - name: config
+          mountPath: /etc/config
+          readOnly: true
+        - name: log-ping-vol
+          mountPath: /mnt/data
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 8081
 

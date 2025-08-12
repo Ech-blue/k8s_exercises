@@ -15,11 +15,29 @@ spec:
     spec:
       containers:
       - name: log-output
-        image: chenoc/log-output-app:v8
+        image: chenoc/log-output-app:v9
         imagePullPolicy: Always
         ports:
         - containerPort: 8081
         env:
         - name: PINGPONG_SERVICE_URL
           value: "http://ping-pong-svc:8080"
+        - name: MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: cm-log-output
+              key: MESSAGE
+        volumeMounts:
+        - name: config
+          mountPath: /etc/config
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: cm-log-output
+          items:
+          - key: information.txt
+            path: information.txt
+        
+
 
