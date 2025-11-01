@@ -13,17 +13,30 @@ spec:
       labels:
         app: ping-pong
     spec:
-      volumes:
-        - name: log-ping-vol
-          persistentVolumeClaim:
-            claimName: shared-claim
       containers:
       - name: ping-pong
-        image: chenoc/ping-pong-app:v5
-        volumeMounts:
-        - name: log-ping-vol
-          mountPath: /mnt/data
+        image: chenoc/ping-pong-app:v6
+        env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: postgres-db-secret 
+              key: host
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-db-secret 
+              key: user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-db-secret 
+              key: password
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: postgres-db-secret 
+              key: dbname
         imagePullPolicy: Always  
         ports:
         - containerPort: 8080
-
