@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: project
+data:
+  db_host: postgres.project.svc.cluster.local
+  db_user: postgres
+  db_name: todos
