@@ -17,6 +17,7 @@
 * [2.5](https://github.com/Ech-blue/k8s_exercises/tree/master)
 * [2.7](https://github.com/Ech-blue/k8s_exercises/tree/2.7/postgres)
 * [2.8](https://github.com/Ech-blue/k8s_exercises/tree/2.8/webserver/todo-postgres)
+* [2.9](https://github.com/Ech-blue/k8s_exercises/tree/2.9/webserver/todo-postgres/cronjob)
 
 
 
