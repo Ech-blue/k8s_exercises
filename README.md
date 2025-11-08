@@ -15,7 +15,8 @@
 * [2.3](https://github.com/Ech-blue/k8s_exercises/releases/tag/2.3)
 * [2.4](https://github.com/Ech-blue/k8s_exercises/tree/master/webserver)
 * [2.5](https://github.com/Ech-blue/k8s_exercises/tree/master)
-* [2.7](https://github.com/Ech-blue/k8s_exercises/tree/master/postgres)
+* [2.7](https://github.com/Ech-blue/k8s_exercises/tree/2.7/postgres)
+* [2.8](https://github.com/Ech-blue/k8s_exercises/tree/2.8/webserver/todo-postgres)
 
 
 
