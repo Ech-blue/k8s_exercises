@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: wikipedia-todo-reminder
+  namespace: project
+spec:
+  schedule: "0 * * * *"  # Every hour at minute 0
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: fetch-random-wiki
+            image: curlimages/curl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Fetching random Wikipedia article..."
+
+              # Step 1: Get redirect Location from Special:Random
+              URL=$(curl -s -o /dev/null -w "%{url_effective}" "https://en.wikipedia.org/wiki/Special:Random")
+
+              if [ -z "$URL" ]; then
+                echo "ERROR: Failed to get random Wikipedia URL"
+                exit 1
+              fi
+
+              echo "Random article URL: $URL"
+
+              # Step 2: Send as todo to backend
+              PAYLOAD="{\"todo\": \"Read $URL\"}"
+              RESPONSE=$(curl -s -w "%{http_code}" -X POST \
+                http://todo-backend-svc.project.svc.cluster.local:3001/todos \
+                -H "Content-Type: application/json" \
+                -d "$PAYLOAD")
+
+              HTTP_CODE="${RESPONSE: -3}"
+              if [ "$HTTP_CODE" = "201" ]; then
+                echo "✅ Successfully added todo: Read $URL"
+              else
+                echo "❌ Failed to add todo. HTTP status: $HTTP_CODE"
+                echo "Response: ${RESPONSE%???}"
+                exit 1
+              fi
