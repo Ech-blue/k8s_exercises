@@ -19,7 +19,7 @@
 * [2.8](https://github.com/Ech-blue/k8s_exercises/tree/2.8/webserver/todo-postgres)
 * [2.9](https://github.com/Ech-blue/k8s_exercises/tree/2.9/webserver/todo-postgres/cronjob)
 * [2.10](https://github.com/Ech-blue/k8s_exercises/tree/2.10/webserver/todo-postgres/backend)
-
+* [3.1](https://github.com/Ech-blue/k8s_exercises/tree/3.1/pinpong-gke)
 
 
 
