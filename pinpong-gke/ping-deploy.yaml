@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-pong-deployment
+  namespace: exercises
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-pong
+  template:
+    metadata:
+      labels:
+        app: ping-pong
+    spec:
+      containers:
+      - name: ping-pong
+        image: chenoc/ping-pong-app:v6
+        env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: postgres-db-secret 
+              key: host
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-db-secret 
+              key: user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-db-secret 
+              key: password
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: postgres-db-secret 
+              key: dbname
+        imagePullPolicy: Always  
+        ports:
+        - containerPort: 8080
+
