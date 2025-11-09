@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
-meta
+metadata:
   name: postgres-initdb
   namespace: exercises
-
+data:
   init.sql: |
     CREATE DATABASE pingpong;
 
