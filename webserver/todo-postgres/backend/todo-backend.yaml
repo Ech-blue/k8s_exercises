@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: todo-backend
-        image: chenoc/todo-backend:v2 
+        image: chenoc/todo-backend:v3 
         env:
         - name: DB_HOST
           valueFrom:
