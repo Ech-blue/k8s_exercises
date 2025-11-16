@@ -1,0 +1,37 @@
+# log-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: combined-ingress
+  namespace: exercises
+  annotations:
+    # Optional: Use GKE's default load balancer
+    # kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+  - http:
+      paths:
+      # Route / to ping-pong-svc to satisfy Ingress health check
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ping-pong-svc 
+            port:
+              number: 8080
+      # Route /pingpong specifically to ping-pong-svc
+      - path: /pingpong
+        pathType: Prefix
+        backend:
+          service:
+            name: ping-pong-svc 
+            port:
+              number: 8080
+      # Route /log to log-output-svc
+      - path: /log
+        pathType: Prefix
+        backend:
+          service:
+            name: log-output-svc 
+            port:
+              number: 8081
