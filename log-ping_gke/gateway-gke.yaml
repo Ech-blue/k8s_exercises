@@ -1,0 +1,53 @@
+# 1. Gateway Resource
+
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: pingpong-gateway
+  namespace: exercises # Ensure this is in the same namespace as your services
+spec:
+  gatewayClassName: gke-l7-global-external-managed
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      kinds:
+      - kind: HTTPRoute
+      namespaces:
+        from: Same # Only allow HTTPRoutes from the 'exercises' namespace
+---
+# 2. HTTPRoute Resource
+
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: pingpong-log-route
+  namespace: exercises
+spec:
+  parentRefs:
+  - name: pingpong-gateway
+  
+  rules:
+  # --- Rule 1: Route for /log ---
+  # This must go first because it has a unique destination port (8081)
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /log
+    backendRefs:
+    - name: log-output-svc
+      port: 8081
+
+  # --- Rule 2: Routes for / and /pingpong ---
+  # These paths all go to the ping-pong service on port 8080
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /pingpong 
+    - path:
+        type: PathPrefix
+        value: /        
+    backendRefs:
+    - name: ping-pong-svc
+      port: 8080
